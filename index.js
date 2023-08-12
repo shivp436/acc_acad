@@ -47,7 +47,7 @@ session({
     	  ttl: 60 * 60 * 24 * 14
 	}),
 	cookie: {
-		maxAge: 900000
+		maxAge: 14 * 24 * 60 * 60 * 1000
 	}
 }));
 
@@ -64,11 +64,10 @@ app.use(function(req, res, next) {
     res.locals.error_msg = req.flash('error_msg');
     res.locals.error = req.flash('error');
     next();
-  });
+});
 
 // Routes
 app.use('/', require('./routes/mainRoutes.js'));
-// app.use('/users', require('./routes/usersRoutes.js'));
 
 // PORT
 const PORT = process.env.port || 5000;
