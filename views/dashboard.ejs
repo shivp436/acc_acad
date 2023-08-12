@@ -1,0 +1,31 @@
+<section id="hero-dashboard" class="hero hero-mini">
+    <div class="hero-container">
+        <h3>
+            <strong>Dashboard</strong>
+        </h3>
+    </div>
+</section>
+
+<main id="main">
+    <div class="container-fluid">
+        <div class="my-3"></div>
+        <%- include('./partials/messages') %>
+        <div class="row p-2">
+            <div class="col-4 px-2 d-flex align-items-center">
+                <div class="text-center">
+                    <i class="bi bi-person-circle dashboard-user-icon"></i>
+                    <span class="role-badge"><%= user.role %></span>
+                </div>
+            </div>
+            <div class="col-8 px-2 d-flex align-items-center ">
+                <div class="">
+                    <p class="caption-text mb-2 dashboard-text fw-bold"><%= user.name %></p>
+                    <p class="caption-text"><%= user.phone %></p>
+                    <p class="caption-text"><%= user.email %></p>
+                </div>
+            </div>
+            <a href="/logout" class="btn btn-out col-5 m-auto fw-bold my-5">Logout&nbsp;&nbsp;<i class="bi bi-arrow-right-circle-fill"></i></a>
+        </div>        
+    </div>
+</main>
+
