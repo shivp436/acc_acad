@@ -45,7 +45,10 @@ session({
 	  store: MongoStore.create({
 		  mongoUrl: db,
     	  ttl: 60 * 60 * 24 * 14
-	})
+	}),
+	cookie: {
+		maxAge: 900000
+	}
 }));
 
 // Passport middleware
