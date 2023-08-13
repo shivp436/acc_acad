@@ -13,6 +13,7 @@ router.get("/", (req, res) => res.render("home"));
 // Programs Page
 router.get("/programs", (req, res) => res.render("programs"));
 router.get("/contact", (req, res) => res.render("contact"));
+router.get("/about", (req, res) => res.render("about"));
 
 // Login Page
 router.get("/login", forwardAuthenticated, (req, res) => res.render("login"));
