@@ -164,9 +164,10 @@ router.post("/contact", (req, res) => {
         newMessage
             .save()
             .then(() => {
-                req.flash("success_msg", "Message Sent Succesfully");
+                req.flash("success_msg", "Message Sent Succesfully.");
                 res.redirect("contact");
                 console.log("Message saved successfully", newMessage);
+                sendEmail(newMessage);
             })
             .catch((err) => {
                 req.flash("error_msg", "Error Encountered. Please try again");
@@ -181,6 +182,47 @@ router.post("/contact", (req, res) => {
             });
     }
 });
+
+// CONTACT FORM TO EMAILJS
+const emailjs = require("@emailjs/nodejs");
+
+// importing required variables
+require("dotenv").config();
+const serviceID = process.env.SERVICE_ID;
+const templateID = process.env.TEMPLATE_ID;
+const pubkey = process.env.PUB_KEY;
+const prikey = process.env.PRI_KEY;
+
+// Contact Form to Email
+function sendEmail(newMessage) {
+    const templateParams = {
+        name: newMessage.name,
+        email: newMessage.email,
+        subject: newMessage.subject,
+        message: newMessage.message,
+        date: newMessage.date,
+    };
+
+    emailjs
+        .send(serviceID, templateID, templateParams, {
+            publicKey: pubkey,
+            privateKey: prikey,
+        })
+        .then(
+            (response) => {
+                console.log(
+                    "Success: Email Sent!",
+                    response.status,
+                    response.text
+                );
+            },
+            (err) => {
+                console.log("FAILED to send email", err);
+            }
+        );
+}
+
+// Get current Date
 
 function currentDate() {
     const cdate = new Date();
