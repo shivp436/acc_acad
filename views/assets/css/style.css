@@ -529,7 +529,7 @@ section {
 }
 
 /*--------------------------------------------------------------
-# About
+# Home > About
 --------------------------------------------------------------*/
 #about {
     min-height: 95vh;
@@ -591,7 +591,7 @@ section {
     animation-delay: 0.8s;
     margin-top: 6px;
     border: 2px solid #e43c5c;
-}
+}   
 
 .about .content .btn-learn-more:hover {
     background: #e43c5c;
@@ -600,26 +600,26 @@ section {
 }
 
 /*--------------------------------------------------------------
-# Cta
+# Home > Testimonials
 --------------------------------------------------------------*/
-.cta {
+.testimonials {
     background: linear-gradient(rgba(2, 2, 2, 0.5), rgba(0, 0, 0, 0.8)),
         url("../img/cta-bg.jpg") center center;
     background-size: cover;
     padding: 60px 0;
 }
 
-.cta h3 {
+.testimonials h3 {
     color: #fff;
     font-size: 28px;
     font-weight: 700;
 }
 
-.cta p {
+.testimonials p {
     color: #fff;
 }
 
-.cta .cta-btn {
+.testimonials .testimonials-btn {
     font-family: "Nunito", sans-serif;
     text-transform: uppercase;
     font-weight: 500;
@@ -634,13 +634,39 @@ section {
     color: #fff;
 }
 
-.cta .cta-btn:hover {
+.testimonials .testimonials-btn:hover {
     background: #e43c5c;
     border: 2px solid #e43c5c;
 }
 
+#testimonials-home .card {
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px red;
+    width: 90vw;
+    padding-top: 5px;
+}
+
+#testimonials-home .card img {
+    max-width: 120px;
+    max-height: 120px;
+    padding: 1px;
+    background-color: #f5f5f5;
+    margin: 10px auto 2px;
+}
+
+#testimonials-home .card .card-text {
+    color: #ddd;
+}
+
+#testimonials-home .carousel-indicators [data-bs-target] {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+}
+
+
 @media (min-width: 1024px) {
-    .cta {
+    .testimonials {
         background-attachment: fixed;
     }
 }

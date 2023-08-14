@@ -14,6 +14,8 @@ router.get("/", (req, res) => res.render("home"));
 router.get("/programs", (req, res) => res.render("programs"));
 router.get("/contact", (req, res) => res.render("contact"));
 router.get("/about", (req, res) => res.render("about"));
+router.get("/testimonials", (req, res) => res.render("testimonials"));
+
 
 // Login Page
 router.get("/login", forwardAuthenticated, (req, res) => res.render("login"));

@@ -216,6 +216,7 @@ window.addEventListener('load', () => {
     '/about': 'about-nav',
     '/blog': 'blog-nav',
     '/contact': 'contact-nav',
+    '/testimonials': 'testimonials-nav',
     '/login': 'account-nav',
     '/register': 'account-nav',
     '/dashboard': 'account-nav',
