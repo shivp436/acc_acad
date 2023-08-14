@@ -641,7 +641,6 @@ section {
 
 #testimonials-home .card {
     background: rgba(0, 0, 0, 0.5);
-    border: 1px red;
     width: 90vw;
     padding-top: 5px;
 }
@@ -1202,4 +1201,35 @@ section {
 .about-footer .btn-join-now:hover {
     background: #e43c5c;
     color: #fff;
+}
+
+/* Testimonials Page */
+
+#testimonial-page-carousel .card {
+    background: rgba(220, 220, 220, 0.8);
+    width: 92vw;
+    margin: auto;
+    border: none;
+}
+
+#testimonial-page-carousel .card img {
+    margin: 0px auto;
+}
+
+#testimonial-page-carousel .card .card-text {
+    color: #333;
+}
+
+#testimonial-page-carousel .carousel-indicators [data-bs-target] {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+}
+
+#testimonial-page-carousel .card-title {
+    color: #d91e42;
+}
+
+#testimonial-page-carousel .card-subtitle {
+    color: #666;
 }
