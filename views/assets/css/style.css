@@ -378,7 +378,7 @@ h6 {
 }
 
 .hero-mini {
-    height: 45vh;
+    height: 35vh;
 }
 
 .hero-mini h3 {
@@ -928,6 +928,10 @@ section {
     border-radius: 50px;
     transition: all 0.3s ease-in-out;
     margin: 10px auto 0px;
+}
+
+.contact .info .card {
+    border: 1px solid #777;
 }
 
 .contact .contact-form {
