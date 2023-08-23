@@ -26,82 +26,156 @@ router.get('/register', forwardAuthenticated, (req, res) =>
 
 // Update User Details
 router.post('/updateUserDetails', ensureAuthenticated, async (req, res) => {
-    const id = req.user._id;
-    const nameUp = req.body.name;
-    const emailUp = req.body.email;
-    const phoneUp = req.body.phone;
-    let errors = [];
+	const id = req.user._id;
+	const { nameUp, emailUp, phoneUp } = req.body;
 
-    try {
-        const user = await User.findOne({ _id: id });
+	try {
+		const user = await User.findOne({ _id: id });
 
-        if (!user) {
-            req.flash(
-                'error_msg',
-                'Invalid Request'
-            );
-            res.redirect('/dashboard');
-        }
+		if (!user) {
+			req.flash('error_msg', 'Invalid Request');
+			res.redirect('/dashboard');
+		}
 
-        const nameOld = user.name;
-        const emailOld = user.email;
-        const phoneOld = user.phone;
+		const nameOld = user.name;
+		const emailOld = user.email;
+		const phoneOld = user.phone;
 
-        // Updated name Verification
-        const updatedName = nameUp ? nameUp : nameOld;
+		// Updated name Verification
+		const updatedName = nameUp ? nameUp : nameOld;
 
-        // Updated Email & Phone Verification
-        const updatedEmail = emailUp ? (isValidEmail(emailUp) ? emailUp : (errors.push({ msg: 'Please Enter a valid Email Address' }), emailOld)) : emailOld;
-        const updatedPhone = phoneUp ? (phoneval(phoneUp) ? phoneUp : (errors.push({ msg: 'Please Enter a valid Phone Number' }), phoneOld)) : phoneOld;
+		// Updated Email & Phone Verification
+		const updatedEmail = emailUp
+			? isValidEmail(emailUp)
+				? emailUp
+				: (req.flash('error_msg', 'Please Enter a valid Email Address'),
+				  emailOld)
+			: emailOld;
+		const updatedPhone = phoneUp
+			? isValidPhone(phoneUp)
+				? phoneUp
+				: (req.flash('error_msg', 'Please Enter a valid Phone Number'),
+				  phoneOld)
+			: phoneOld;
 
-        // Check if the updated email already exists for another user
-        if (updatedEmail !== emailOld) {
-            const existingUser = await User.findOne({ email: updatedEmail });
-            if (existingUser) {
-                updatedEmail = emailOld;
-                // errors.push({ msg: 'Email is already in use by another user' });
-                req.flash(
-                    'error_msg',
-                    'Email is already in use by another user'
-                );
-                res.redirect('dashboard');
-            }
-        }
+		// Check if the updated email already exists for another user
+		if (updatedEmail !== emailOld) {
+			const existingUser = await User.findOne({ email: updatedEmail });
+			if (existingUser) {
+				updatedEmail = emailOld;
+				req.flash(
+					'error_msg',
+					'Email is already in use by another user'
+				);
+				res.redirect('dashboard');
+			}
+		}
 
-        if (errors.length > 0) {
-            res.render('dashboard', {
-                errors,
-                user: req.user,
-            });
-        }
+		const updatedUser = await User.findOneAndUpdate(
+			{ _id: id },
+			{
+				$set: {
+					name: updatedName,
+					email: updatedEmail,
+					phone: updatedPhone,
+				},
+				$addToSet: {
+					// tracks changes in email & phone in an array
+					emailHistory: updatedEmail,
+					phoneHistory: updatedPhone,
+				},
+			},
+			{ new: true } // Returns the updated document
+		);
 
-        const updatedUser = await User.findOneAndUpdate(
-            { _id: id },
-            { 
-                $set: { name: updatedName, email: updatedEmail, phone: updatedPhone },
-                $addToSet: { // tracks changes in email & phone in an array
-                    emailHistory: updatedEmail,
-                    phoneHistory: updatedPhone,
-                } 
-            },
-            { new: true } // Returns the updated document
-        );
+		req.flash('success_msg', 'User Details Updated');
+		res.redirect('dashboard');
+	} catch (error) {
+		console.error('Error updating user:', error);
+		// res.status(500).json({ msg: 'Server error' });
+		req.flash('error_msg', 'Error Occured');
+		res.redirect('dashboard');
+	}
+});
 
-        req.flash(
-            'success_msg',
-            'User Details Updated'
-        );
-        res.redirect('dashboard');
+// CHANGE PASSWORD METHOD
+router.post('/changePassword', ensureAuthenticated, async (req, res) => {
+	const { passwordOld, passwordNew, passwordNew2 } = req.body;
+	const id = req.user._id;
 
-    } catch (error) {
-        console.error('Error updating user:', error);
-        res.status(500).json({ msg: 'Server error' });
-        req.flash(
-            'error_msg',
-            'Error Occured'
-        );
-        res.render('dashboard', {user: req.user});
-    }
+	// check if new passwords are same
+	if (passwordNew != passwordNew2) {
+		req.flash('error_msg', 'New Passwords do not match. Please try again');
+		return res.redirect('/dashboard');
+	}
+
+	try {
+		const user = await User.findOne({ _id: id });
+
+		if (!user) {
+			req.flash('error_msg', 'Invalid Request');
+			return res.redirect('/dashboard');
+		}
+
+		// verify old password
+		const isMatch = await matchPass(passwordOld, user.password);
+		if (isMatch) {
+			// old password matches
+			// check if new password is different from old one
+			if (passwordNew == passwordOld) {
+				req.flash(
+					'error_msg',
+					'New Password must be different from old password'
+				);
+				return res.redirect('/dashboard');
+			}
+
+			// Check new password strength
+			if (!isValidPassword(passwordNew)) {
+				req.flash('error_msg', 'Password is not strong enough');
+				return res.redirect('/dashboard');
+			}
+
+			// Encrypt new password
+			bcrypt
+				.genSalt(10)
+				.then((salt) => {
+					return bcrypt.hash(passwordNew, salt);
+				})
+				.then((hash) => {
+					console.log(hash, passwordNew);
+					return User.findOneAndUpdate(
+						{ _id: id },
+						{ password: hash },
+						{ new: true } // Return the updated document
+					).exec();
+				})
+				.then((updatedUser) => {
+					req.flash('success_msg', 'User Password Updated');
+					return res.redirect('/dashboard');
+				})
+				.catch((err) => {
+					console.error('Password Reset Failed', err);
+					req.flash(
+						'error_msg',
+						'Password Reset Failed. Please try again'
+					);
+					return res.redirect('/dashboard');
+				});
+		} else {
+			// Passwords do not match
+			req.flash(
+				'error_msg',
+				'Old Password is incorrect. Please try again'
+			);
+			return res.redirect('/dashboard');
+		}
+	} catch (err) {
+		// Handle error
+		console.log(err);
+		req.flash('error_msg', 'Error Occured. Please try again');
+		return res.redirect('/dashboard');
+	}
 });
 
 router.get('/dashboard', ensureAuthenticated, (req, res) =>
@@ -124,15 +198,15 @@ router.post('/register', (req, res) => {
 		errors.push({ msg: 'Passwords do not match' });
 	}
 
-	if (password.length < 6) {
-		errors.push({ msg: 'Password must be at least 6 characters' });
+	if (!isValidPassword(password)) {
+		errors.push({ msg: 'Password is not strong enough.' });
 	}
 
-    if (!isValidEmail(email)) {
+	if (!isValidEmail(email)) {
 		errors.push({ msg: 'Please enter a valid Email Address' });
 	}
 
-	if (!phoneval(phone)) {
+	if (!isValidPhone(phone)) {
 		errors.push({ msg: 'Please enter a valid Phone Number' });
 	}
 
@@ -157,8 +231,9 @@ router.post('/register', (req, res) => {
 					name,
 					email,
 					phone,
-					role: 'Athlete',
 					password,
+					emailHistory: [email],
+					phoneHistory: [phone],
 				});
 
 				bcrypt.genSalt(10, (err, salt) => {
@@ -183,14 +258,20 @@ router.post('/register', (req, res) => {
 });
 
 // Phone Number Validation
-function phoneval(phone) {
+function isValidPhone(phone) {
 	// console.log(/^(\d{3})[- ]?(\d{3})[- ]?(\d{4})$/.test(phone));
 	return /^(\d{3})[- ]?(\d{3})[- ]?(\d{4})$/.test(phone);
 }
 
 function isValidEmail(email) {
-    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-    return emailRegex.test(email);
+	const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+	return emailRegex.test(email);
+}
+
+function isValidPassword(password) {
+	const regex =
+		/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+	return regex.test(password);
 }
 
 // Login
@@ -321,6 +402,16 @@ function currentDate() {
 	const minutes = cdate.getMinutes();
 	const seconds = cdate.getSeconds();
 	return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+}
+
+async function matchPass(unencPass, encPass) {
+	try {
+		const isMatch = await bcrypt.compare(unencPass, encPass);
+		return isMatch;
+	} catch (err) {
+		console.log(err);
+		res.redirect('/dashboard');
+	}
 }
 
 module.exports = router;

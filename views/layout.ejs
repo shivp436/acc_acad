@@ -168,8 +168,8 @@
 															<!-- <label for="name">Name</label> -->
 															<input
 																type="name"
-																id="name"
-																name="name"
+																id="nameUp"
+																name="nameUp"
 																class="form-control"
 																placeholder="Enter Name"
 																value="<%= typeof name != 'undefined' ? name : '' %>" />
@@ -179,8 +179,8 @@
 															<!-- <label for="email">Email</label> -->
 															<input
 																type="email"
-																id="email"
-																name="email"
+																id="emailUp"
+																name="emailUp"
 																class="form-control"
 																placeholder="Enter Email"
 																value="<%= typeof email != 'undefined' ? email : '' %>" />
@@ -190,8 +190,8 @@
 															<!-- <label for="phone">Phone</label> -->
 															<input
 																type="phone"
-																id="phone"
-																name="phone"
+																id="phoneUp"
+																name="phoneUp"
 																class="form-control"
 																placeholder="Enter Phone Number"
 																value="<%= typeof phone != 'undefined' ? phone : '' %>" />
@@ -217,7 +217,7 @@
 													data-bs-toggle="collapse"
 													data-bs-target="#panelsStayOpen-collapseOne"
 													aria-expanded="false"
-													aria-controls="panelsStayOpen-collapseTwo">
+													aria-controls="panelsStayOpen-collapseOne">
 													Change Password
 												</button>
 											</h2>
@@ -228,7 +228,7 @@
 													class="accordion-body bg-body-secondary">
 													<!-- CHANGE PASSWORD FORM -->
 													<form
-														action="/register"
+														action="/changePassword"
 														method="POST">
 														<div
 															class="form-group mb-3">
