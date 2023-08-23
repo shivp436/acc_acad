@@ -15,16 +15,16 @@ const UserSchema = new mongoose.Schema({
   },
   role: {
     type: String,
-    required: true
+    default: "Athlete",
   },
   password: {
     type: String,
     required: true
   },
-  date: {
-    type: Date,
-    default: Date.now
-  }
+  emailHistory: [String],
+  phoneHistory: [Number],
+}, {
+  timestamps: true
 });
 
 const User = mongoose.model('User', UserSchema);

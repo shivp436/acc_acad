@@ -1,137 +1,456 @@
 <!DOCTYPE html>
 <html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta content="width=device-width, initial-scale=1.0" name="viewport" />
 
-<head>
-  <meta charset="utf-8">
-  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+		<title>Accelerate Academy</title>
+		<meta content="" name="description" />
+		<meta content="" name="keywords" />
 
-  <title>Accelerate Academy</title>
-  <meta content="" name="description">
-  <meta content="" name="keywords">
+		<!-- Favicons -->
+		<link href="/assets/img/favicon.png" rel="icon" />
+		<link href="/assets/img/apple-touch-icon.png" rel="apple-touch-icon" />
 
-  <!-- Favicons -->
-  <link href="/assets/img/favicon.png" rel="icon">
-  <link href="/assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+		<!-- Google Fonts -->
+		<link
+			href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+			rel="stylesheet" />
 
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+		<!-- Vendor CSS Files -->
+		<link
+			href="assets/vendor/bootstrap/css/bootstrap.min.css"
+			rel="stylesheet" />
+		<link
+			href="assets/vendor/bootstrap-icons/bootstrap-icons.css"
+			rel="stylesheet" />
+		<link
+			href="assets/vendor/boxicons/css/boxicons.min.css"
+			rel="stylesheet" />
+		<link
+			href="assets/vendor/glightbox/css/glightbox.min.css"
+			rel="stylesheet" />
+		<link href="assets/vendor/remixicon/remixicon.css" rel="stylesheet" />
+		<link
+			href="assets/vendor/swiper/swiper-bundle.min.css"
+			rel="stylesheet" />
 
-  <!-- Vendor CSS Files -->
-  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-  <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
-  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
-  <link href="assets/vendor/remixicon/remixicon.css" rel="stylesheet">
-  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+		<!-- Template Main CSS File -->
+		<link href="assets/css/style.css" rel="stylesheet" />
+	</head>
 
-  <!-- Template Main CSS File -->
-  <link href="assets/css/style.css" rel="stylesheet">
+	<body class="">
+		<!-- ======= Header ======= -->
+		<header id="header" class="fixed-top">
+			<div
+				class="container d-flex align-items-center justify-content-between">
+				<h1 class="logo">
+					<a href="/" class=""
+						><img
+							src="assets/img/logo.png"
+							alt=""
+							class="img-fluid" />
+						<span class="align-middle">Accelerate</span>
+					</a>
+				</h1>
 
-</head>
+				<nav id="navbar" class="navbar">
+					<ul>
+						<li>
+							<a id="home-nav" class="nav-link" href="/">Home</a>
+						</li>
+						<li>
+							<a id="about-nav" class="nav-link" href="/about"
+								>About Us</a
+							>
+						</li>
+						<li>
+							<a
+								id="programs-nav"
+								class="nav-link"
+								href="/programs"
+								>Programs</a
+							>
+						</li>
+						<li>
+							<a
+								id="blog-nav"
+								class="nav-link disabled"
+								href="/blog"
+								>Blog</a
+							>
+						</li>
+						<li>
+							<a
+								id="testimonials-nav"
+								class="nav-link"
+								href="/testimonials"
+								>Testimonials</a
+							>
+						</li>
+						<li>
+							<a id="contact-nav" class="nav-link" href="/contact"
+								>Contact Us</a
+							>
+						</li>
+						<li>
+							<a id="account-nav" href="/login" class="nav-link"
+								>My Account</a
+							>
+						</li>
+					</ul>
+					<i
+						class="bi bi-gear btn"
+						id="nav-settings-gear"
+						data-bs-toggle="modal"
+						data-bs-target="#settingsModal"></i>
+					<i class="bi bi-list mobile-nav-toggle"></i>
+				</nav>
+				<!-- .navbar -->
 
-<body class="">
+				<!-- Settings Modal -->
+				<div
+					class="modal fade"
+					id="settingsModal"
+					data-bs-backdrop="static"
+					data-bs-keyboard="false"
+					tabindex="-1"
+					aria-labelledby="staticBackdropLabel"
+					aria-hidden="true">
+					<div
+						class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+						<div class="modal-content">
+							<!-- MODAL HEADER -->
+							<div class="modal-header">
+								<h1
+									class="modal-title fs-5 fw-bold"
+									id="staticBackdropLabel">
+									Settings
+								</h1>
+								<button
+									type="button"
+									class="btn-close"
+									data-bs-dismiss="modal"
+									aria-label="Close"></button>
+							</div>
+							<!-- MODAL BODY - SETTINGS -->
+							<div class="modal-body">
+								<ul class="list-group my-2">
+									<li class="list-group-item fw-bold">
+										<i class="bi bi-person-fill-gear"></i
+										>&nbsp;Account
+									</li>
+									<li
+										class="list-group-item accordion accordion-flush">
+										<div class="accordion-item">
+											<h2 class="accordion-header">
+												<button
+													class="accordion-button collapsed"
+													type="button"
+													data-bs-toggle="collapse"
+													data-bs-target="#panelsStayOpen-collapseTwo"
+													aria-expanded="false"
+													aria-controls="panelsStayOpen-collapseTwo">
+													Edit Profile
+												</button>
+											</h2>
+											<div
+												id="panelsStayOpen-collapseTwo"
+												class="accordion-collapse collapse">
+												<div
+													class="accordion-body bg-body-secondary">
+													<!-- EDIT USER FORM -->
+													<form
+														action="/updateUserDetails"
+														method="POST">
+														<div
+															class="form-group mb-3">
+															<!-- <label for="name">Name</label> -->
+															<input
+																type="name"
+																id="name"
+																name="name"
+																class="form-control"
+																placeholder="Enter Name"
+																value="<%= typeof name != 'undefined' ? name : '' %>" />
+														</div>
+														<div
+															class="form-group mb-3">
+															<!-- <label for="email">Email</label> -->
+															<input
+																type="email"
+																id="email"
+																name="email"
+																class="form-control"
+																placeholder="Enter Email"
+																value="<%= typeof email != 'undefined' ? email : '' %>" />
+														</div>
+														<div
+															class="form-group mb-3">
+															<!-- <label for="phone">Phone</label> -->
+															<input
+																type="phone"
+																id="phone"
+																name="phone"
+																class="form-control"
+																placeholder="Enter Phone Number"
+																value="<%= typeof phone != 'undefined' ? phone : '' %>" />
+														</div>
+														<button
+															type="submit"
+															id="updateUserBtn"
+															class="btn mt-1 mx-auto">
+															Update
+														</button>
+													</form>
+												</div>
+											</div>
+										</div>
+									</li>
+									<li
+										class="list-group-item accordion accordion-flush">
+										<div class="accordion-item">
+											<h2 class="accordion-header">
+												<button
+													class="accordion-button collapsed"
+													type="button"
+													data-bs-toggle="collapse"
+													data-bs-target="#panelsStayOpen-collapseOne"
+													aria-expanded="false"
+													aria-controls="panelsStayOpen-collapseTwo">
+													Change Password
+												</button>
+											</h2>
+											<div
+												id="panelsStayOpen-collapseOne"
+												class="accordion-collapse collapse">
+												<div
+													class="accordion-body bg-body-secondary">
+													<!-- CHANGE PASSWORD FORM -->
+													<form
+														action="/register"
+														method="POST">
+														<div
+															class="form-group mb-3">
+															<!-- <label for="password">Password</label> -->
+															<input
+																type="password"
+																id="passwordOld"
+																name="passwordOld"
+																class="form-control"
+																placeholder="Enter Old Password"/>
+														</div>
+														<div
+															class="form-group mb-3">
+															<!-- <label for="password">Password</label> -->
+															<input
+																type="password"
+																id="passwordNew"
+																name="passwordNew"
+																class="form-control"
+																placeholder="Create New Password" />
+														</div>
+														<div
+															class="form-group mb-3">
+															<!-- <label for="password2">Confirm Password</label> -->
+															<input
+																type="password"
+																id="passwordNew2"
+																name="passwordNew2"
+																class="form-control"
+																placeholder="Confirm New Password"/>
+														</div>
+														<button
+															type="submit" id="updatePassBtn"
+															class="btn btn-buy btn-block mt-1">
+															Update Password
+														</button>
+													</form>
+												</div>
+											</div>
+										</div>
+									</li>
+								</ul>
+								<ul class="list-group mt-3 mb-2">
+									<li class="list-group-item fw-bold">
+										<i class="bi bi-bell-fill"></i
+										>&nbsp;Notification Settings
+									</li>
+									<li
+										class="list-group-item text-secondary disabled">
+										<div class="form-check form-switch">
+											<label
+												class="form-check-label"
+												for="flexSwitchCheckChecked"
+												>Web Notifications</label
+											>
+											<input
+												class="form-check-input"
+												type="checkbox"
+												role="switch"
+												id="webNotificationCheck"
+												checked />
+										</div>
+									</li>
+									<li
+										class="list-group-item text-secondary disabled">
+										<div class="form-check form-switch">
+											<label
+												class="form-check-label"
+												for="flexSwitchCheckDefault"
+												>Email Notifications</label
+											>
+											<input
+												class="form-check-input"
+												type="checkbox"
+												role="switch"
+												id="emailNotificationCheck"
+												checked />
+										</div>
+									</li>
+								</ul>
+								<ul class="list-group mt-3 mb-2">
+									<li class="list-group-item fw-bold">
+										<i class="bi bi-bell-fill"></i
+										>&nbsp;Payment Settings
+									</li>
+									<li class="list-group-item disabled">
+										<a href="#" class="text-secondary"
+											>Default Payment Method<i
+												class="bi bi-chevron-right"></i
+										></a>
+									</li>
+								</ul>
+								<div class="logout-div text-center">
+									<a
+										href="/logout"
+										class="btn btn-out m-auto fw-bold mt-5 mb-3 text-center"
+										>Logout&nbsp;&nbsp;<i
+											class="bi bi-arrow-right-circle-fill"></i
+									></a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</header>
+		<!-- End Header -->
+		<div><%- body %></div>
 
-  <!-- ======= Header ======= -->
-  <header id="header" class="fixed-top ">
-    <div class="container d-flex align-items-center justify-content-between">
+		<!-- ======= Footer ======= -->
+		<footer id="footer">
+			<div class="footer-top px-2">
+				<div class="container">
+					<div class="row">
+						<div
+							class="col-lg-3 col-md-6 footer-contact"
+							id="contact">
+							<h3>Accelerate Academy</h3>
+							<p class="">
+								#9, 2nd Cross, Ashoknagar <br />
+								Basavanagudi, Bangalore 560050<br /><br />
 
-        <h1 class="logo">
-            <a href="/" class=""><img src="assets/img/logo.png" alt="" class="img-fluid">
-                <span class="align-middle">Accelerate</span>
-            </a>
-        </h1>
+								<strong>Phone:</strong>
+								<a href="tel:+919353759748">+91 9353 759 748</a
+								><br />
+								<strong>Email:</strong>
+								<a href="mailto:teamaccelerateacademy@gmail.com"
+									>teamaccelerateacademy@gmail.com</a
+								><br />
+							</p>
+						</div>
 
-      <nav id="navbar" class="navbar">
-        <ul>
-          <li><a id="home-nav" class="nav-link" href="/">Home</a></li>
-          <li><a id="about-nav" class="nav-link" href="/about">About Us</a></li>
-          <li><a id="programs-nav" class="nav-link" href="/programs">Programs</a></li>
-          <li><a id="blog-nav" class="nav-link disabled" href="/blog">Blog</a></li>
-          <li><a id="testimonials-nav" class="nav-link" href="/testimonials">Testimonials</a></li>
-          <li><a id="contact-nav" class="nav-link" href="/contact">Contact Us</a></li>
-          <li><a id="account-nav" href="/login" class="nav-link">My Account</a></li>
-        </ul>
-        <i class="bi bi-list mobile-nav-toggle"></i>
-      </nav><!-- .navbar -->
+						<div class="col-lg-2 col-md-6 footer-links">
+							<h4>Useful Links</h4>
+							<ul>
+								<li>
+									<i class="bx bx-chevron-right"></i>
+									<a href="/">Home</a>
+								</li>
+								<li>
+									<i class="bx bx-chevron-right"></i>
+									<a href="/about">About us</a>
+								</li>
+								<li>
+									<i class="bx bx-chevron-right"></i>
+									<a href="/testimonials">Testimonials</a>
+								</li>
+								<li>
+									<i class="bx bx-chevron-right"></i>
+									<a href="/contact">Contact us</a>
+								</li>
+								<li>
+									<i class="bx bx-chevron-right"></i>
+									<a href="/programs">Programs</a>
+								</li>
+								<li>
+									<i class="bx bx-chevron-right"></i>
+									<a href="/terms-conditions"
+										>Terms & Conditions</a
+									>
+								</li>
+								<li>
+									<i class="bx bx-chevron-right"></i>
+									<a href="/privacy-policy">Privacy policy</a>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
 
-    </div>
-  </header><!-- End Header -->
-    <div><%- body %></div>
+			<div class="container d-md-flex py-4 row">
+				<div class="me-md-auto text-center text-md-start lg-col-6">
+					<div class="copyright">
+						&copy; <strong><span>Accelerate Academy</span></strong
+						>. All Rights Reserved
+					</div>
+					<div
+						class="social-links text-center text-md-right pt-3 pt-md-0 lg-col-6">
+						<a
+							href="https://www.youtube.com/@accelerateacademy"
+							class="youtube"
+							><i class="bx bxl-youtube"></i
+						></a>
+						<a
+							href="https://www.instagram.com/teamaccelerateacademy/"
+							class="instagram"
+							><i class="bx bxl-instagram"></i
+						></a>
 
-    <!-- ======= Footer ======= -->
-  <footer id="footer">
+						<!-- End Footer -->
 
-    <div class="footer-top px-2">
-      <div class="container">
-        <div class="row">
+						<a
+							href="#"
+							class="back-to-top d-flex align-items-center justify-content-center"
+							><i class="bi bi-arrow-up-short"></i
+						></a>
 
-          <div class="col-lg-3 col-md-6 footer-contact" id="contact">
-            <h3>Accelerate Academy</h3>
-            <p class="">
-              #9, 2nd Cross, Ashoknagar <br>
-              Basavanagudi, Bangalore 560050<br><br>
+						<script
+							src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+							integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+							crossorigin="anonymous"></script>
+						<script
+							src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
+							integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut"
+							crossorigin="anonymous"></script>
+						<script
+							src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
+							integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
+							crossorigin="anonymous"></script>
 
-              <strong>Phone:</strong> <a href="tel:+919353759748">+91 9353 759 748</a><br>
-              <strong>Email:</strong> <a href="mailto:teamaccelerateacademy@gmail.com">teamaccelerateacademy@gmail.com</a><br>
-            </p>
-          </div>
+						<!-- Vendor JS Files -->
+						<script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+						<script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
+						<script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+						<script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
 
-          <div class="col-lg-2 col-md-6 footer-links">
-            <h4>Useful Links</h4>
-            <ul>
-              <li><i class="bx bx-chevron-right"></i> <a href="/">Home</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="/about">About us</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="/testimonials">Testimonials</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="/contact">Contact us</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="/programs">Programs</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="/terms-conditions">Terms & Conditions</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="/privacy-policy">Privacy policy</a></li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="container d-md-flex py-4 row">
-
-      <div class="me-md-auto text-center text-md-start lg-col-6">
-        <div class="copyright">
-          &copy; <strong><span>Accelerate Academy</span></strong>. All Rights Reserved
-      </div>
-      <div class="social-links text-center text-md-right pt-3 pt-md-0 lg-col-6">
-        <a href="https://www.youtube.com/@accelerateacademy" class="youtube"><i class="bx bxl-youtube"></i></a>
-        <a href="https://www.instagram.com/teamaccelerateacademy/" class="instagram"><i class="bx bxl-instagram"></i></a>
-      </div>
-    </div>
-  </footer><!-- End Footer -->
-
-  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
-
-  <script
-      src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-      integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
-      integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut"
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
-      integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
-      crossorigin="anonymous"
-    ></script>
-
-  <!-- Vendor JS Files -->
-  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
-  <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
-  <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
-
-  <!-- Template Main JS File -->
-  <script src="assets/js/main.js"></script>
-
-</body>
-
+						<!-- Template Main JS File -->
+						<script src="assets/js/main.js"></script>
+					</div>
+				</div>
+			</div>
+		</footer>
+	</body>
 </html>

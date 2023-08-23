@@ -69,6 +69,10 @@ app.use(function(req, res, next) {
 // Routes
 app.use('/', require('./routes/mainRoutes.js'));
 
+//UPLOAD ROUTES WILL GO HERE
+// var uploadRouter = require('./routes/upload');
+// app.use('/', uploadRouter);
+
 // PORT
 const PORT = process.env.port || 5000;
 app.listen(PORT, console.log(`Server running on  ${PORT}`));

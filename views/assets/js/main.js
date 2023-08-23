@@ -210,6 +210,8 @@
 // function to make a navbar link active & Window Title
 window.addEventListener('load', () => {
   const url = window.location.pathname;
+
+  
   const urlToIdMap = {
     '/': 'home-nav',
     '/programs': 'programs-nav',
@@ -221,10 +223,15 @@ window.addEventListener('load', () => {
     '/register': 'account-nav',
     '/dashboard': 'account-nav',
   };
-
+  
   
   const elementId = urlToIdMap[url];
   document.querySelector(`#${elementId}`).classList.add('active'); 
+  
+  // show settings button in dashboard page
+  if(url == '/dashboard') {
+    document.querySelector("#nav-settings-gear").style.display = "block";
+  }
   
   // window.title
   const titleAddon = url.slice(1) === '' ? 'Home' : (url.slice(1).charAt(0).toUpperCase() + url.slice(2));
