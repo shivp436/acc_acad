@@ -307,6 +307,7 @@ router.post('/contact', (req, res) => {
 	const { name, email, subject, message } = req.body;
 	const date = currentDate();
 	let errors = [];
+	const userId = (req.user) ? req.user._id : "anonymous";
 
 	if (!name || !email || !subject || !message) {
 		errors.push({ msg: 'Please enter all fields' });
@@ -322,6 +323,7 @@ router.post('/contact', (req, res) => {
 		});
 	} else {
 		const newMessage = new Message({
+			userId,
 			name,
 			email,
 			subject,

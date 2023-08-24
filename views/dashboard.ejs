@@ -13,43 +13,54 @@
 		<div class="row p-2">
 			<div class="col-4 px-2 d-flex align-items-center">
 				<div class="text-center mx-auto">
-					<i class="bi bi-person-circle dashboard-user-icon" id="dash-user-icon"></i>
-                    <img src="" alt="User Image" style="display: none; width:85px" id="dash-user-img" class="border mb-2 border-danger img-fluid rounded-circle">
-                    <p class="role-badge" id="dash-img-btn" style="background-color: #ddd;">Image ↑</p>
-                    <script>
-                        const imgSRC = document.querySelector("#dash-user-img").getAttribute("src");
-                        if(imgSRC) {
-                            console.log(imgSRC);
-                            document.querySelector("#dash-user-img").style.display = "block";
-                            document.querySelector("#dash-user-icon").style.display = "none";
-                            document.querySelector("#dash-img-btn").style.display = "none";
-                        }
-                    </script>
-					
+					<i
+						class="bi bi-person-circle dashboard-user-icon"
+						id="dash-user-icon"></i>
+					<img
+						src=""
+						alt="User Image"
+						style="display: none; width: 85px"
+						id="dash-user-img"
+						class="border mb-2 border-danger img-fluid rounded-circle" />
+					<p
+						class="role-badge"
+						id="dash-img-btn"
+						style="background-color: #ddd">
+						Image ↑
+					</p>
+					<script>
+						const imgSRC = document
+							.querySelector('#dash-user-img')
+							.getAttribute('src');
+						if (imgSRC) {
+							console.log(imgSRC);
+							document.querySelector(
+								'#dash-user-img'
+							).style.display = 'block';
+							document.querySelector(
+								'#dash-user-icon'
+							).style.display = 'none';
+							document.querySelector(
+								'#dash-img-btn'
+							).style.display = 'none';
+						}
+					</script>
 				</div>
 			</div>
 			<div class="col-8 px-2 d-flex align-items-center">
-                <div class="">
-                    <p class="caption-text mb-2 dashboard-text fw-bold align-middle">
-                        <%= user.name %>&nbsp;
-                        <span class="role-badge align-middle"><%= user.role %></span>
+				<div class="">
+					<p
+						class="caption-text mb-2 dashboard-text fw-bold align-middle">
+						<%= user.name %>&nbsp;
+						<span class="role-badge align-middle"
+							><%= user.role %></span
+						>
 					</p>
 					<p class="caption-text"><%= user.phone %></p>
 					<p class="caption-text"><%= user.email %></p>
-					<p class="caption-text text-success fw-semibold">ID: <%= user._id %></p>
 				</div>
 			</div>
 		</div>
-
-        <!-- TODO -->
-        <ul class="my-2">
-            <li><a href="https://dribbble.com/shots/19741159-Fitness-App-Subscription-Page-Details?utm_source=Clipboard_Shot&utm_campaign=tatiana_dudik&utm_content=Fitness%20App%20-%20Subscription%20Page%20Details&utm_medium=Social_Share&utm_source=Clipboard_Shot&utm_campaign=tatiana_dudik&utm_content=Fitness%20App%20-%20Subscription%20Page%20Details&utm_medium=Social_Share">
-                Final Dashboard Design
-            </a></li>
-            <li><a href="https://dribbble.com/shots/17098311-Dogma-Profile-Settings?utm_source=Clipboard_Shot&utm_campaign=Kevinduk&utm_content=Dogma%20-%20Profile%20%26%20Settings&utm_medium=Social_Share&utm_source=Clipboard_Shot&utm_campaign=Kevinduk&utm_content=Dogma%20-%20Profile%20%26%20Settings&utm_medium=Social_Share">
-                Final Settings Design
-            </a></li>
-        </ul>
 
 		<!-- <form action="/fileupload" enctype="multipart/form-data" method="POST"> 
 			<input type="file" name="image" />
@@ -57,11 +68,11 @@
 		</form> -->
 
 		<!-- DASH CARDS -->
-		<div class="dash-cards row">
-			<!-- DASH PLAN CARD -->
-			<div class="dash-card dash-plan-card card shadow mt-4">
+		<div class="dash-cards row mb-4">
+			<!-- DASH PLANS FORM -->
+			<div class="dash-card dash-plan-card card shadow">
 				<div class="card-body">
-					<h5 class="card-title fw-semibold">
+					<h5 class="card-title dash-card-title">
 						Current Plan: Plan Name
 					</h5>
 					<h6 class="card-subtitle mb-2 text-body-secondary">
@@ -89,7 +100,8 @@
 						aria-hidden="true">
 						<div
 							class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-							<div class="modal-content">
+							<div
+								class="modal-content border border-secondary mt-5 shadow-sm">
 								<!-- MODAL HEADER -->
 								<div class="modal-header">
 									<h1
@@ -192,8 +204,8 @@
 			<!-- DASH PAYMENTS CARD -->
 			<div class="dash-card dash-payment-card card shadow mt-4">
 				<div class="card-body">
-					<h5 class="card-title fw-semibold">
-						Latest Payment<br>RS.XXXX on XX-XX-XX
+					<h5 class="card-title dash-card-title">
+						Latest Payment<br />RS.XXXX on XX-XX-XX
 					</h5>
 					<h6 class="card-subtitle mb-2 text-body-secondary">
 						Next Due: xx-xx-xxxx
@@ -220,7 +232,8 @@
 						aria-hidden="true">
 						<div
 							class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-							<div class="modal-content">
+							<div
+								class="modal-content border border-secondary mt-5 shadow-sm">
 								<!-- MODAL HEADER -->
 								<div class="modal-header">
 									<h1
@@ -240,51 +253,67 @@
 										<div
 											class="box border border-danger my-2">
 											<h3>Personalised Training Plan</h3>
-                                            <p>Date: xx-xx-xx xx:xx AM  $XXX</p>
+											<p>Date: xx-xx-xx xx:xx AM $XXX</p>
 										</div>
-                                        <div
+										<div
 											class="box border border-danger my-2">
 											<h3>Personalised Training Plan</h3>
-                                            <p>Date: xx-xx-xx xx:xx AM  $XXX</p>
+											<p>Date: xx-xx-xx xx:xx AM $XXX</p>
 										</div>
-                                        <div
+										<div
 											class="box border border-danger my-2">
 											<h3>Personalised Training Plan</h3>
-                                            <p>Date: xx-xx-xx xx:xx AM  $XXX</p>
+											<p>Date: xx-xx-xx xx:xx AM $XXX</p>
 										</div>
-                                        <div
+										<div
 											class="box border border-danger my-2">
 											<h3>Personalised Training Plan</h3>
-                                            <p>Date: xx-xx-xx xx:xx AM  $XXX</p>
+											<p>Date: xx-xx-xx xx:xx AM $XXX</p>
 										</div>
-                                        <div
+										<div
 											class="box border border-danger my-2">
-                                            <a href="https://dribbble.com/shots/18475738-Finance-Mobile-App?utm_source=Clipboard_Shot&utm_campaign=qclay_design&utm_content=Finance%20-%20Mobile%20App&utm_medium=Social_Share&utm_source=Clipboard_Shot&utm_campaign=qclay_design&utm_content=Finance%20-%20Mobile%20App&utm_medium=Social_Share">
-                                                All Transactions Final Design
-                                            </a>
+											<a
+												href="https://dribbble.com/shots/18475738-Finance-Mobile-App?utm_source=Clipboard_Shot&utm_campaign=qclay_design&utm_content=Finance%20-%20Mobile%20App&utm_medium=Social_Share&utm_source=Clipboard_Shot&utm_campaign=qclay_design&utm_content=Finance%20-%20Mobile%20App&utm_medium=Social_Share">
+												All Transactions Final Design
+											</a>
 										</div>
-                                        <div
+										<div
 											class="box border border-danger my-2">
-                                            <a href="https://dribbble.com/shots/21088793-12-Receipt-Page-References?utm_source=Clipboard_Shot&utm_campaign=raafig&utm_content=12%20Receipt%20Page%20References&utm_medium=Social_Share&utm_source=Clipboard_Shot&utm_campaign=raafig&utm_content=12%20Receipt%20Page%20References&utm_medium=Social_Share">
-                                                Transaction Detail Final Design
-                                            </a>
+											<a
+												href="https://dribbble.com/shots/21088793-12-Receipt-Page-References?utm_source=Clipboard_Shot&utm_campaign=raafig&utm_content=12%20Receipt%20Page%20References&utm_medium=Social_Share&utm_source=Clipboard_Shot&utm_campaign=raafig&utm_content=12%20Receipt%20Page%20References&utm_medium=Social_Share">
+												Transaction Detail Final Design
+											</a>
+										</div>
+										<div
+											class="box border border-danger my-2">
+											<a
+												href="https://dribbble.com/shots/19741159-Fitness-App-Subscription-Page-Details?utm_source=Clipboard_Shot&utm_campaign=tatiana_dudik&utm_content=Fitness%20App%20-%20Subscription%20Page%20Details&utm_medium=Social_Share&utm_source=Clipboard_Shot&utm_campaign=tatiana_dudik&utm_content=Fitness%20App%20-%20Subscription%20Page%20Details&utm_medium=Social_Share">
+												Final Dashboard Design
+											</a>
 										</div>
 									</div>
-
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
+
+			<!-- DASH TESTIMONIAL CARD -->
+			<div class="dash-card dash-testimonial-card card shadow mt-4">
+				<div class="card-body pt-3 pb-1">
+					<h5 class="card-title dash-card-title">
+						<span>
+							<a href="/contact#contact-section"
+								>Provide Review/ Testimonial
+								<i
+									class="bi bi-chevron-right floating-chevron fw-bolder"></i>
+							</a>
+						</span>
+					</h5>
+				</div>
+			</div>
 		</div>
 
-		<!-- <div class="logout-div text-center">
-			<a
-				href="/logout"
-				class="btn btn-out col-5 m-auto fw-bold my-5 text-center"
-				>Logout&nbsp;&nbsp;<i class="bi bi-arrow-right-circle-fill"></i
-			></a>
-		</div> -->
 	</div>
 </main>

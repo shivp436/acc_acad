@@ -1194,6 +1194,23 @@ section {
 	text-align: center;
 }
 
+.dash-testimonial-card {
+	border: 2px solid #e43c5c;
+}
+
+.dash-card-title {
+	font-size: 17px;
+	font-weight: bold;
+}
+
+.floating-chevron {
+	float: right;
+	margin-right: 0px;
+	align-self: center;
+	font-weight: 900;
+	font-size: 16px;
+}
+
 /*  COMPONENTS */
 
 .underline {

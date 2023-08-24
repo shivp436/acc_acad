@@ -21,6 +21,10 @@ const MessageSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    userId: {
+        type: String,
+        required: true,
+    }
 });
 
 const Message = mongoose.model("Message", MessageSchema);
