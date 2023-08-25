@@ -1299,3 +1299,27 @@ section {
 #testimonial-page-carousel .card-subtitle {
 	color: #666;
 }
+
+/* OTP VERIFICATION PAGE */
+.otp-input-container {
+	display: flex;
+	justify-content: space-between;
+	width: 15vw; /* Adjust this width as needed */
+	margin: auto;
+}
+
+@media (max-width: 767px) {
+	.otp-input-container {
+		width: 50vw;
+	}
+}
+
+.otp-input-box {
+	width: 40px;
+	height: 40px;
+	text-align: center;
+	border: 1px solid #ced4da;
+	border-radius: 4px;
+	font-size: 18px;
+	outline: none;
+}

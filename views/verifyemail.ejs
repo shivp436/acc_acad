@@ -1,0 +1,35 @@
+<section id="hero-login" class="hero hero-mini">
+    <div class="hero-container">
+        <h3>
+            <strong>Register</strong>
+        </h3>
+        <h2>Login to your account for more</h2>
+    </div>
+</section><!-- End Hero -->
+
+<main id="main">
+    <section id="programs" class="programs">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-5 col-md-6 program-box m-auto">
+                    <div class="box">
+                        <h1 class="text-center mb-3"><i class="bi bi-person-add"></i>&nbsp;&nbsp;Register</h1>
+                        <%- include ('./partials/messages') %>
+                        <form action="/verifyemail" method="POST">
+                            <div class="form-group mb-3 otp-input-container">
+                                <input value="" type="text" class="otp-input-box" name="digit1" maxlength="1" pattern="\d" required>
+                                <input value="" type="text" class="otp-input-box" name="digit2" maxlength="1" pattern="\d" required>
+                                <input value="" type="text" class="otp-input-box" name="digit3" maxlength="1" pattern="\d" required>
+                                <input value="" type="text" class="otp-input-box" name="digit4" maxlength="1" pattern="\d" required>
+                            </div>
+                            <button type="submit" class="btn btn-buy btn-block mt-1">
+                              Verify
+                            </button>
+                          </form>
+                          <p class="caption-text mt-4">Have An Account? <a href="/login">Login</a></p>
+                    </div>
+                </div>
+            </div> 
+        </div>
+    </section>
+</main>

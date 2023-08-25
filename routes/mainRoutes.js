@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcryptjs');
 const passport = require('passport');
+const schedule = require('node-schedule');
 
 // Load User model
 const User = require('../models/Users');
@@ -243,17 +244,79 @@ router.post('/register', (req, res) => {
 						newUser
 							.save()
 							.then((user) => {
-								req.flash(
-									'success_msg',
-									'You are now registered and can log in'
-								);
-								res.redirect('/login');
+								const otp = generateOTP();
+								req.session.otp = otp;
+								req.session.userID = user._id;
+								const message= {
+									name: user.name,
+									email: user.email,
+									otp: otp,
+								}
+								sendOTPEmail(message);
+								errors.push({msg: 'Please enter the OTP sent to your email. Expires in 10 minutes'});
+								res.render('verifyemail', {
+									errors,
+								});
 							})
 							.catch((err) => console.log(err));
 					});
 				});
 			}
 		});
+	}
+});
+
+// open register page if someone tries coming back to verifyemail
+router.get('/verifyemail', (req, res) => {
+	res.redirect('register');
+})
+
+// VERIFY EMAIL METHOD
+router.post('/verifyemail', async (req, res) => {
+	const genOTP = req.session.otp;
+	const id = req.session.userID;
+	const {digit1, digit2, digit3, digit4} = req.body;
+	const reqOTP = parseInt(digit1 + digit2 + digit3 + digit4);
+	let errors = [];
+
+	if(genOTP == reqOTP) {
+		try {
+			const updatedUser = await User.findOneAndUpdate(
+				{ _id: id },
+				{
+					$set: {
+						verified: true,
+					},
+				},
+				{ new: true } // Returns the updated document
+			);
+
+			if (!updatedUser) {
+				console.log("User Not Found");
+				await User.findOneAndDelete({ _id: id });
+				req.flash('error_msg', 'User Not Found.');
+				return res.redirect('register');
+			}
+			// if user get verified
+			req.flash('success_msg', 'Account Created. You can now login');
+			res.redirect('login');
+		} catch (error) {
+			try {
+				// Attempt to delete the user and register again.
+				await User.findOneAndDelete({ _id: id });
+				req.flash('error_msg', 'Error Occurred. User deleted.');
+				return res.redirect('register');
+			} catch (deleteError) {
+				console.error('Error deleting user:', deleteError);
+				req.flash('error_msg', 'Error Occurred. User not deleted.');
+				return res.redirect('register');
+			}
+		}
+	} else {
+		errors.push({msg: "Incorrect OTP. Please try again"});
+		res.render('verifyemail', {
+			errors,
+		})
 	}
 });
 
@@ -337,7 +400,7 @@ router.post('/contact', (req, res) => {
 				req.flash('success_msg', 'Message Sent Succesfully.');
 				res.redirect('contact');
 				console.log('Message saved successfully', newMessage);
-				sendEmail(newMessage);
+				sendContactEmail(newMessage);
 			})
 			.catch((err) => {
 				req.flash('error_msg', 'Error Encountered. Please try again');
@@ -359,12 +422,13 @@ const emailjs = require('@emailjs/nodejs');
 // importing required variables
 require('dotenv').config();
 const serviceID = process.env.SERVICE_ID;
-const templateID = process.env.TEMPLATE_ID;
+const messageTemplateID = process.env.MESSAGE_TEMPLATE_ID;
+const otpTemplateID = process.env.OTP_TEMPLATE_ID;
 const pubkey = process.env.PUB_KEY;
 const prikey = process.env.PRI_KEY;
 
 // Contact Form to Email
-function sendEmail(newMessage) {
+function sendContactEmail(newMessage) {
 	const templateParams = {
 		name: newMessage.name,
 		email: newMessage.email,
@@ -374,7 +438,34 @@ function sendEmail(newMessage) {
 	};
 
 	emailjs
-		.send(serviceID, templateID, templateParams, {
+		.send(serviceID, messageTemplateID, templateParams, {
+			publicKey: pubkey,
+			privateKey: prikey,
+		})
+		.then(
+			(response) => {
+				console.log(
+					'Success: Email Sent!',
+					response.status,
+					response.text
+				);
+			},
+			(err) => {
+				console.log('FAILED to send email', err);
+			}
+		);
+}
+
+// OTP Message EMail
+function sendOTPEmail(newMessage) {
+	const templateParams = {
+		name: newMessage.name,
+		email: newMessage.email,
+		otp: newMessage.otp,
+	};
+
+	emailjs
+		.send(serviceID, otpTemplateID, templateParams, {
 			publicKey: pubkey,
 			privateKey: prikey,
 		})
@@ -406,6 +497,18 @@ function currentDate() {
 	return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
 }
 
+// OTP Generator 
+function generateOTP() {
+    const otpLength = 4;
+    let otp = '';
+
+    for (let i = 0; i < otpLength; i++) {
+        otp += Math.floor(Math.random() * 10); // Generate a random digit between 0 and 9
+    }
+
+    return otp;
+}
+
 async function matchPass(unencPass, encPass) {
 	try {
 		const isMatch = await bcrypt.compare(unencPass, encPass);
@@ -415,5 +518,15 @@ async function matchPass(unencPass, encPass) {
 		res.redirect('/dashboard');
 	}
 }
+
+// Cleanup unverified users every 20 minutes
+const userCleanupJob = schedule.scheduleJob('*/20 * * * *', async () => {
+    try {
+        const deletedUsers = await User.deleteMany({ verified: false });
+        console.log(`Deleted ${deletedUsers.deletedCount} unverified users.`);
+    } catch (error) {
+        console.error('User cleanup error:', error);
+    }
+});
 
 module.exports = router;

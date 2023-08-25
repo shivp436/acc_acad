@@ -19,6 +19,12 @@ module.exports = function (passport) {
 						});
 					}
 
+					if(!user.verified) {
+						return done(null, false, {
+							message: 'Email not verified. Wait for 10 min and regiter again'
+						})
+					}
+
 					// Match password
 					bcrypt.compare(password, user.password, (err, isMatch) => {
 						if (err) throw err;

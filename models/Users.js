@@ -23,6 +23,10 @@ const UserSchema = new mongoose.Schema({
   },
   emailHistory: [String],
   phoneHistory: [Number],
+  verified: {
+    type: Boolean,
+    default: false,
+  },
 }, {
   timestamps: true
 });
