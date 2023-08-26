@@ -3,5 +3,8 @@
     "prettier.singleAttributePerLine": false,
     "prettier.tabWidth": 4,
     "prettier.singleQuote": true,
-    "prettier.useTabs": true
+    "prettier.useTabs": true,
+    "editor.formatOnPaste": true,
+    "editor.formatOnSave": true,
+    "editor.formatOnType": false
 }

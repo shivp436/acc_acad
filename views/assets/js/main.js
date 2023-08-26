@@ -223,7 +223,7 @@
 })();
 
 // function to make a navbar link active & Window Title
-window.addEventListener('load', () => {
+window.addEventListener('DOMContentLoaded', () => {
 	const url = window.location.pathname;
 
 	const urlToIdMap = {
@@ -236,6 +236,10 @@ window.addEventListener('load', () => {
 		'/login': 'account-nav',
 		'/register': 'account-nav',
 		'/dashboard': 'account-nav',
+		'/verifyemail': 'account-nav',
+		'/forgotpassword': 'account-nav',
+		'/resetpassword': 'account-nav',
+		'/recoverOTP': 'account-nav',
 	};
 
 	const elementId = urlToIdMap[url];

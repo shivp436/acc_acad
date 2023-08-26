@@ -144,7 +144,6 @@ router.post('/changePassword', ensureAuthenticated, async (req, res) => {
 					return bcrypt.hash(passwordNew, salt);
 				})
 				.then((hash) => {
-					console.log(hash, passwordNew);
 					return User.findOneAndUpdate(
 						{ _id: id },
 						{ password: hash },
@@ -247,13 +246,15 @@ router.post('/register', (req, res) => {
 								const otp = generateOTP();
 								req.session.otp = otp;
 								req.session.userID = user._id;
-								const message= {
+								const message = {
 									name: user.name,
 									email: user.email,
 									otp: otp,
-								}
+								};
 								sendOTPEmail(message);
-								errors.push({msg: 'Please enter the OTP sent to your email. Expires in 10 minutes'});
+								errors.push({
+									msg: 'Please enter the OTP sent to your email. Expires in 10 minutes',
+								});
 								res.render('verifyemail', {
 									errors,
 								});
@@ -269,17 +270,17 @@ router.post('/register', (req, res) => {
 // open register page if someone tries coming back to verifyemail
 router.get('/verifyemail', (req, res) => {
 	res.redirect('register');
-})
+});
 
 // VERIFY EMAIL METHOD
 router.post('/verifyemail', async (req, res) => {
 	const genOTP = req.session.otp;
 	const id = req.session.userID;
-	const {digit1, digit2, digit3, digit4} = req.body;
+	const { digit1, digit2, digit3, digit4 } = req.body;
 	const reqOTP = parseInt(digit1 + digit2 + digit3 + digit4);
 	let errors = [];
 
-	if(genOTP == reqOTP) {
+	if (genOTP == reqOTP) {
 		try {
 			const updatedUser = await User.findOneAndUpdate(
 				{ _id: id },
@@ -292,7 +293,7 @@ router.post('/verifyemail', async (req, res) => {
 			);
 
 			if (!updatedUser) {
-				console.log("User Not Found");
+				console.log('User Not Found');
 				await User.findOneAndDelete({ _id: id });
 				req.flash('error_msg', 'User Not Found.');
 				return res.redirect('register');
@@ -313,10 +314,144 @@ router.post('/verifyemail', async (req, res) => {
 			}
 		}
 	} else {
-		errors.push({msg: "Incorrect OTP. Please try again"});
+		errors.push({ msg: 'Incorrect OTP. Please try again' });
 		res.render('verifyemail', {
 			errors,
-		})
+		});
+	}
+});
+
+// FORGOT PASSWORD METHOD
+router.get('/forgotpassword', (req, res) => res.render('forgotpassword'));
+router.post('/forgotpassword', async (req, res) => {
+	const email = req.body.email;
+	let errors = [];
+
+	if (!isValidEmail(email)) {
+		errors.push({ msg: 'Please enter a valid email' });
+		return res.render('forgotpassword', {
+			errors,
+			email,
+		});
+	}
+
+	try {
+		const user = await User.findOne({ email: email });
+
+		if (!user) {
+			errors.push({ msg: 'Email is not registered' });
+			return res.render('forgotpassword', {
+				errors,
+				email,
+			});
+		}
+
+		const otp = generateOTP();
+		console.log(otp);
+		const message = {
+			otp: otp,
+			name: user.name,
+			email: user.email,
+		};
+		sendOTPEmail(message);
+		req.session.otp = otp;
+		req.session.user = user;
+		return res.render('recoverOTP');
+	} catch (error) {
+		console.log(console.log(error));
+		errors.push({ msg: 'Error Occured. Please try again' });
+		return res.render('forgotpassword', {
+			errors,
+			email,
+		});
+	}
+});
+
+// Recovery OTP Page
+router.get('/recoverOTP', (req, res) => res.redirect('forgotpassword'));
+
+router.post('/recoverOTP', (req, res) => {
+	const genOTP = req.session.otp;
+	const { digit1, digit2, digit3, digit4 } = req.body;
+	const reqOTP = parseInt(digit1 + digit2 + digit3 + digit4);
+	let errors = [];
+
+	if (genOTP == reqOTP) {
+		return res.render('resetpassword');
+	}
+
+	errors.push({ msg: 'Incorrect OTP. Please try again' });
+	return res.render('recoverOTP', {
+		errors,
+	});
+});
+
+// RESET PASSWORD METHOD
+router.post('/resetpassword', async (req, res) => {
+	const id = req.session.user._id;
+	const { password, password2 } = req.body;
+	let errors = [];
+
+	if (!password || !password2) {
+		errors.push({ msg: 'Please enter all fields' });
+	} else if (!isValidPassword(password)) {
+		errors.push({ msg: 'Password is not strong enough.' });
+	}
+
+	if (password != password2) {
+		errors.push({ msg: 'Passwords do not match' });
+	}
+
+	if (errors.length > 0) {
+		console.log(id);
+		return res.render('resetpassword', {
+			errors,
+			password,
+			password2,
+		});
+	}
+
+	try {
+		const user = User.findOne({ _id: id });
+
+		if (!user) {
+			errors.push({ msg: 'User not found. Please try again' });
+			req.session.user = '';
+			return res.render('forgotpassword', {
+				errors,
+			});
+		}
+
+		bcrypt
+			.genSalt(10)
+			.then((salt) => {
+				return bcrypt.hash(password, salt);
+			})
+			.then((hash) => {
+				return User.findOneAndUpdate(
+					{ _id: id },
+					{ password: hash },
+					{ new: true } // Return the updated document
+				).exec();
+			})
+			.then((updatedUser) => {
+				req.flash('success_msg', 'User Password Updated');
+				req.session.user = ''; // clear the user after resetting password
+				return res.redirect('/login');
+			})
+			.catch((err) => {
+				console.error('Password Reset Failed', err);
+				req.flash(
+					'error_msg',
+					'Password Reset Failed. Please try again'
+				);
+				return res.redirect('/forgotpassword');
+			});
+	} catch (error) {
+		console.error('Password Reset Failed', error);
+		req.flash('error_msg', 'Password Reset Failed. Please try again');
+		req.session.user = '';
+		return res.redirect('/forgotpassword');
 	}
 });
 
@@ -370,7 +505,7 @@ router.post('/contact', (req, res) => {
 	const { name, email, subject, message } = req.body;
 	const date = currentDate();
 	let errors = [];
-	const userId = (req.user) ? req.user._id : "anonymous";
+	const userId = req.user ? req.user._id : 'anonymous';
 
 	if (!name || !email || !subject || !message) {
 		errors.push({ msg: 'Please enter all fields' });
@@ -497,16 +632,20 @@ function currentDate() {
 	return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
 }
 
-// OTP Generator 
+// OTP Generator
 function generateOTP() {
-    const otpLength = 4;
-    let otp = '';
+	const otpLength = 4;
+	let otp = '';
 
-    for (let i = 0; i < otpLength; i++) {
-        otp += Math.floor(Math.random() * 10); // Generate a random digit between 0 and 9
-    }
+	for (let i = 0; i < otpLength; i++) {
+		const digit =
+			i === 0
+				? Math.floor(Math.random() * 9) + 1
+				: Math.floor(Math.random() * 10);
+		otp += digit.toString();
+	}
 
-    return otp;
+	return otp;
 }
 
 async function matchPass(unencPass, encPass) {
@@ -521,12 +660,12 @@ async function matchPass(unencPass, encPass) {
 
 // Cleanup unverified users every 20 minutes
 const userCleanupJob = schedule.scheduleJob('*/20 * * * *', async () => {
-    try {
-        const deletedUsers = await User.deleteMany({ verified: false });
-        console.log(`Deleted ${deletedUsers.deletedCount} unverified users.`);
-    } catch (error) {
-        console.error('User cleanup error:', error);
-    }
+	try {
+		const deletedUsers = await User.deleteMany({ verified: false });
+		console.log(`Deleted ${deletedUsers.deletedCount} unverified users.`);
+	} catch (error) {
+		console.error('User cleanup error:', error);
+	}
 });
 
 module.exports = router;

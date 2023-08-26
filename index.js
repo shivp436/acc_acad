@@ -20,12 +20,12 @@ const db = process.env.DB_STRING;
 
 // Connect to Database
 const connection = mongoose
-                    .connect(
-                      db,
-                      { useNewUrlParser: true ,useUnifiedTopology: true}
-                    )
-                    .then(() => console.log('MongoDB Connected'))
-                    .catch(err => console.log(err));
+										.connect(
+											db,
+											{ useNewUrlParser: true ,useUnifiedTopology: true}
+										)
+										.then(() => console.log('MongoDB Connected'))
+										.catch(err => console.log(err));
 
 // EJS
 app.use(expressLayouts);
@@ -39,12 +39,12 @@ app.use(express.urlencoded({ extended: false }));
 
 app.use(
 session({
-    secret: 'secret',
-    resave: true,
-    saveUninitialized: true,
-	  store: MongoStore.create({
-		  mongoUrl: db,
-    	  ttl: 60 * 60 * 24 * 14
+		secret: 'secret',
+		resave: true,
+		saveUninitialized: true,
+		store: MongoStore.create({
+			mongoUrl: db,
+				ttl: 60 * 60 * 24 * 14
 	}),
 	cookie: {
 		maxAge: 14 * 24 * 60 * 60 * 1000
@@ -60,10 +60,10 @@ app.use(flash());
 
 // Global variables
 app.use(function(req, res, next) {
-    res.locals.success_msg = req.flash('success_msg');
-    res.locals.error_msg = req.flash('error_msg');
-    res.locals.error = req.flash('error');
-    next();
+		res.locals.success_msg = req.flash('success_msg');
+		res.locals.error_msg = req.flash('error_msg');
+		res.locals.error = req.flash('error');
+		next();
 });
 
 // Routes
