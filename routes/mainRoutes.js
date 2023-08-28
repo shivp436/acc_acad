@@ -468,7 +468,7 @@ function isValidEmail(email) {
 
 function isValidPassword(password) {
 	const regex =
-		/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+		/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[~`!@#$%^&*()_\-+={[}\]|:;"'<,>.?\/])[A-Za-z\d~`!@#$%^&*()_\-+={[}\]|:;"'<,>.?\/]{8,}$/;
 	return regex.test(password);
 }
 

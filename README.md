@@ -15,8 +15,11 @@
 ---
 
 ---
-
-### Latest Commit - Forgot Password Reset Added
+### Latest Commit - Improved Password validation
+    ```plaintext
+    Special characters: ~`! @#$%^&*()_-+={[}]|\:;"'<,>.?/
+    ```
+### Forgot Password Reset Added
 
     > [x] Add Password Forgot Function
     - Link available on login page
